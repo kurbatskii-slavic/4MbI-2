@@ -18,13 +18,6 @@ norm(const std::vector<double> &x, const size_t &shift) // second Holder norm (|
 }
 
 std::ostream 
-&operator<<(std::ostream &os, const DiagonalMatrix& D)
-{
-    os << D.diag;
-    return os;
-}
-
-std::ostream 
 &operator<<(std::ostream &os, const Matrix& A) // cout overloading
 {
     for (size_t i = 0; i < A.rows; i++) {

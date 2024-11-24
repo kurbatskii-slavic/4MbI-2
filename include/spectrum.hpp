@@ -20,7 +20,7 @@ public:
     size_t size() const { return arr.size(); }
     Matrix_circles(const Matrix& A)
     {
-        range.first = 0, range.second = 0;
+        range.first = A(0, 0), range.second = 0;
         double center, radius;
         for (size_t i = 0; i < A.rows; i++) {
             center = A(i, i);
@@ -35,8 +35,15 @@ public:
             arr.push_back(Gershgorin_circle(radius, center));
         }
     }
-
+    std::pair<double, double> get_range() { return range; }
 };
+
+std::ostream 
+&operator<<(std::ostream &os, const std::pair<double, double>& range)
+{
+    os << "Range: [" << range.first << ", " << range.second << ']';
+    return os;
+}
 
 std::ostream 
 &operator<<(std::ostream &os, const Gershgorin_circle& B)
@@ -52,6 +59,5 @@ std::ostream
     for (size_t i = 0; i < v.size(); i++) {
         os << "Circle " << i + 1 << ": " << v[i] << std::endl;  
     }
-    os << "Range: [" << v.range.first << ", " << v.range.second << ']';
     return os;
 }

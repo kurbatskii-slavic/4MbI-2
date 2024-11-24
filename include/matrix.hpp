@@ -71,28 +71,6 @@ struct ScalarMatrix
     }
 };
 
-struct DiagonalMatrix
-{
-    std::vector<double> diag;
-    DiagonalMatrix(const std::vector<double> &v) {
-        diag = std::vector<double>(v.size(), 0);
-        for (size_t i = 0; i < diag.size(); i++) {
-            diag[i] = v[i];
-        }
-    }
-    DiagonalMatrix(const size_t &n): diag(n, 0){}
-    DiagonalMatrix reversed() 
-    {
-        DiagonalMatrix tmp(diag.size());
-        for (size_t i = 0; i < diag.size(); i++)
-            if (diag[i] > 10 * std::numeric_limits<double>::epsilon()) [[likely]] {
-                tmp.diag[i] = (1 / diag[i]);
-            }
-        return tmp;
-    }
-};
-
-std::ostream &operator<<(std::ostream &os, const DiagonalMatrix& D);
 double dot_product(const std::vector<double> &x, const std::vector<double> &y, const size_t &shift=0);
 std::ostream &operator<<(std::ostream &os, const Matrix& A);
 std::ostream &operator<<(std::ostream &os, const std::vector<double>& v);

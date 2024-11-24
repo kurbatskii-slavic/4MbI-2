@@ -38,11 +38,6 @@ main(int argc, char** argv)
     double x_error = norm(x - x_f); // calculate x error
     std::cout << "||x - x_f|| = " <<  x_error << std::endl;
     std::cout << "||f - Ax_f|| = " << f_error << std::endl;
-    std::cout << A;
-    std::cout << '\n' << Matrix_circles(A) << '\n';
-    std::vector<double> d = generate_random(0.01, 25, SIZE);
-    DiagonalMatrix D(d), D_r = D.reversed();
-    std::cout << D << '\n';
-    std::cout << D_r << '\n';
+    std::cout << '\n' << Matrix_circles(A).get_range() << '\n';
     return 0;
 }
