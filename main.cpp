@@ -43,6 +43,7 @@ main(int argc, char** argv)
     std::cout << "Gram-Shmidt: \n";
     std::cout << "||x - x_f|| = " <<  x_error << std::endl;
     std::cout << "||f - Ax_f|| = " << f_error << std::endl;
+    std::cout << "||x - y|| / ||x|| = " << x_error / norm(x) << std::endl;
 
     Matrix_circles circles(A);
     std::cout << "\nSpectrum range:\n";
@@ -52,7 +53,7 @@ main(int argc, char** argv)
     std::vector<double> y0(SIZE, 0), y(SIZE, 0);
     size_t count = 1;
     std::vector<size_t> mask = {1};
-    while (norm(x - y) >= x_error && norm(f - A * y) >= f_error) {
+    while (norm(x - y) >= x_error) {
         count *= 2;
         std::vector<size_t> new_mask(count);
         for (size_t k = 0; k < count; k++) {
@@ -70,6 +71,12 @@ main(int argc, char** argv)
     std::cout << "Chebyshev: \n";
     std::cout << "||x - y|| = " <<  x_error << std::endl;
     std::cout << "||f - Ay|| = " << f_error << std::endl;
+    std::cout << "||x - y|| / ||x|| = " << x_error / norm(x) << std::endl;
     std::cout << "Iterations count = " << count << std::endl;
+
+    std::vector<double> errors = Chebyshev_anylyze(A, f, y0, a, b, count, mask, x); // iteration errors
+    #ifdef DISPLAY_ERRORS
+        std::cout << errors;
+    #endif
     return 0;
 }
