@@ -40,5 +40,9 @@ main(int argc, char** argv)
     std::cout << "||f - Ax_f|| = " << f_error << std::endl;
     std::cout << A;
     std::cout << '\n' << Matrix_circles(A) << '\n';
+    std::vector<double> d = generate_random(0.01, 25, SIZE);
+    DiagonalMatrix D(d), D_r = D.reversed();
+    std::cout << D << '\n';
+    std::cout << D_r << '\n';
     return 0;
 }
