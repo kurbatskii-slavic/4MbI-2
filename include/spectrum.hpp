@@ -5,8 +5,7 @@ class Gershgorin_circle
 {
     double radius, center;
 public:
-    Gershgorin_circle(double r, double c): radius(r), center(c) {}    
-    friend std::ostream &operator<<(std::ostream &os, const Gershgorin_circle& B);
+    Gershgorin_circle(double r, double c): radius(r), center(c) {}
 };
 
 class Matrix_circles
@@ -14,7 +13,6 @@ class Matrix_circles
     std::vector<Gershgorin_circle> arr;
     std::pair<double, double> range;
 public:
-    friend std::ostream &operator<<(std::ostream &os, const Matrix_circles& v);
     Gershgorin_circle operator[](size_t i) const { return arr[i]; }
     Gershgorin_circle &operator[](size_t i) { return arr[i]; }
     size_t size() const { return arr.size(); }
@@ -42,22 +40,5 @@ std::ostream
 &operator<<(std::ostream &os, const std::pair<double, double>& range)
 {
     os << "Range: [" << range.first << ", " << range.second << ']';
-    return os;
-}
-
-std::ostream 
-&operator<<(std::ostream &os, const Gershgorin_circle& B)
-{
-    os << "Center = " << B.center <<  ", Radius = " << B.radius;
-    return os;
-}
-
-
-std::ostream 
-&operator<<(std::ostream &os, const Matrix_circles& v) // cout overloading
-{
-    for (size_t i = 0; i < v.size(); i++) {
-        os << "Circle " << i + 1 << ": " << v[i] << std::endl;  
-    }
     return os;
 }

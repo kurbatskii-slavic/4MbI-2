@@ -40,9 +40,12 @@ std::ostream
 }
 
 std::ostream 
-&operator<<(std::ostream &os, const HouseholderMatrix& T)
+&operator<<(std::ostream &os, const std::vector<size_t>& v)
 {
-    std::cout << T.w;
+    for (auto i: v) {
+        std::cout << i << ' ';
+    }
+    std::cout << std::endl;
     return os;
 }
 
@@ -145,33 +148,6 @@ operator/(const std::vector<double> x, const double &a) // "v / const" overloadi
     return result;
 }
 
-double
-maximum_norm(const std::vector<double> &x) // vector maximum_norm
-{
-    double m = 0;    
-    for (auto x_i: x) {
-        double abs = x_i > 0 ? x_i : -x_i;
-        m = abs > m ? abs : m;
-    }
-    return m;
-}
-
-double
-matrix_maximum_norm(const Matrix &A) // matrix maximum norm
-{
-    double m = 0;
-    for (size_t i = 0; i < A.rows; i++) {
-        double sum = 0;
-        for (size_t j = 0; j < A.cols; j++) {
-            double abs = A(i, j) > 0 ? A(i, j) : -A(i, j);
-            sum += abs;
-        }
-        m = sum > m ? sum : m;
-    } 
-    return m;
-}
-
-
 std::vector<double> 
 solve_triangular_system(const Matrix &R, const std::vector<double> &f) // Gauss method
 {
@@ -185,39 +161,4 @@ solve_triangular_system(const Matrix &R, const std::vector<double> &f) // Gauss 
         x[m] = (f[m] - s) / R(m, m);
     }
     return x;
-}
-
-void 
-matvec(const HouseholderMatrix &H, std::vector<double> &v) // reflection operation (H * v)
-{
-    v -= H.w * (2 * dot_product(H.w, v, H.shift));
-    if (H.coeff == -1) {
-        for (auto i = v.begin() + H.shift; i < v.end(); i++) {
-            (*i) *= H.coeff;
-        }
-    }
-}
-
-void 
-make_reflection(HouseholderMatrix &H, const std::vector<double> &x, const std::vector<double> &y, const size_t &shift) // Make H: x -> y
-{
-    int sign = dot_product(x, y, shift) > 0 ? 1 : -1;
-    std::vector<double> v = x + y * sign;
-    for (size_t i = 0; i < shift; i++) {
-       v[i] = 0;
-    }
-    H.w = v / norm(v);
-    H.coeff = -sign;
-    H.shift = shift;
-}
-
-void
-get_reflection(std::vector<double> &ref, const std::vector<double> &x, const size_t &shift)
-{
-    ref = std::vector<double>(ref.size(), 0);
-    double sub_vec_norm = norm(x, shift);
-    for (size_t i = 0; i < shift; i++) {
-        ref[i] = x[i];
-    } 
-    ref[shift] = sub_vec_norm;
 }

@@ -9,7 +9,6 @@
 
 
 struct Matrix;
-struct HouseholderMatrix;
 struct ScalarMatrix;
 
 double norm(const std::vector<double> &x, const size_t &shift=0);
@@ -23,14 +22,6 @@ std::vector<double> operator*(const std::vector<double> x, const double &a);
 void operator*=(std::vector<double> &self, const double &a);
 std::vector<double> operator/(const std::vector<double> x, const double &a);
 
-struct HouseholderMatrix // struct for Householder matrices
-{
-    std::vector<double> w; // normal vector
-    size_t shift = 0;
-    int coeff = 1;
-    HouseholderMatrix(){};
-    HouseholderMatrix(const std::vector<double> &v): w(v / norm(v)) {} // constructor
-};
 
 struct Matrix // struct for matrices
 {
@@ -74,18 +65,9 @@ struct ScalarMatrix
 double dot_product(const std::vector<double> &x, const std::vector<double> &y, const size_t &shift=0);
 std::ostream &operator<<(std::ostream &os, const Matrix& A);
 std::ostream &operator<<(std::ostream &os, const std::vector<double>& v);
-std::ostream &operator<<(std::ostream &os, const HouseholderMatrix& T);
+std::ostream &operator<<(std::ostream &os, const std::vector<size_t>& v);
 std::istream &operator>>(std::istream &is, Matrix& A);
-double maximum_norm(const std::vector<double> &x);
-double matrix_maximum_norm(const Matrix &A);
-
-
 std::vector<double> solve_triangular_system(const Matrix &R, const std::vector<double> &f);
-void matvec(const HouseholderMatrix &H, std::vector<double> &v);
-
-
-void make_reflection(HouseholderMatrix &H, const std::vector<double> &x, const std::vector<double> &y, const size_t &shift);
-void get_reflection(std::vector<double> &ref, const std::vector<double> &x, const size_t &shift);
 
 
 #endif
