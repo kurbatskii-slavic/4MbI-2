@@ -39,7 +39,7 @@ const std::vector<size_t> &mask, const std::vector<double> &x) // Chebyshev erro
     std::vector<double> y(y0);
     std::vector<double> errors(m);
     for (size_t k = 0; k < m; k++) { // iterations
-        errors[k] = norm(y - x); // save error
+        errors[k] = mean_square_norm(y - x); // save error
         t_k = tau(t0, r0, m, mask[k]); // count parameter
         y = (f - A * y) * t_k + y; // update y
     }
