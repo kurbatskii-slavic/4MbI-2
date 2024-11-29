@@ -1,11 +1,12 @@
 #include "matrix.hpp"
 #include <vector>
 #include <cmath>
+#include <math.h>
 
 double
 tau(const double &t0, const double &r0, const size_t m, const size_t n)
 {
-    const double pi = 3.14159265;
+    const double pi = 2 * std::acos(0);
     return t0 / (1 + r0 * std::cos(pi * (2 * n - 1) / (2 * m)));
 }
 

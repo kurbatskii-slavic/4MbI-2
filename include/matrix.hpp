@@ -12,6 +12,7 @@ struct Matrix;
 struct ScalarMatrix;
 
 double norm(const std::vector<double> &x, const size_t &shift=0);
+double mean_square_norm(const std::vector<double> &x);
 std::vector<double> operator*(const Matrix &A, const std::vector<double> &x);
 const Matrix operator*(const Matrix &A, const Matrix &B);
 std::vector<double> operator-(const std::vector<double> &self, const std::vector<double> &other);

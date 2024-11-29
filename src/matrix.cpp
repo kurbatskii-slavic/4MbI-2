@@ -17,6 +17,12 @@ norm(const std::vector<double> &x, const size_t &shift) // second Holder norm (|
     return std::sqrt(dot_product(x, x, shift));
 }
 
+double 
+mean_square_norm(const std::vector<double> &x) // mean square vector norm
+{
+    return norm(x) / std::sqrt(x.size());
+}
+
 std::ostream 
 &operator<<(std::ostream &os, const Matrix& A) // cout overloading
 {
