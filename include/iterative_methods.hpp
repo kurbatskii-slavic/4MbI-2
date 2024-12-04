@@ -17,7 +17,7 @@ const std::vector<size_t> &mask) // Chebyshev method
 {
     double t0 = 2 / (a + b); // approximation for optimal tau from simple-iteration method
     double cond = b / a; // approximation for cond(A)
-    double r0 = (1 - 1 / cond) / (1 + 1 / cond); // approximation for ro from simple-iteration method
+    double r0 = (1 - 1 / cond) / (1 + 1 / cond); // approximation for rho from simple-iteration method
     double t_k;
     std::vector<double> y(y0);
     for (size_t k = 0; k < m; k++) { // iterations
@@ -39,7 +39,7 @@ const std::vector<size_t> &mask, const std::vector<double> &x) // Chebyshev erro
     std::vector<double> y(y0);
     std::vector<double> errors(m);
     for (size_t k = 0; k < m; k++) { // iterations
-        errors[k] = mean_square_norm(y - x); // save error
+        errors[k] = norm(y - x); // save error
         t_k = tau(t0, r0, m, mask[k]); // count parameter
         y = (f - A * y) * t_k + y; // update y
     }

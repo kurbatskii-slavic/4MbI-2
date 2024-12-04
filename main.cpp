@@ -38,12 +38,12 @@ main(int argc, char** argv)
     std::vector<double> f_n = Q * f;
     std::vector<double> x_f = solve_triangular_system(R, f_n); // solve system
     
-    double f_error = mean_square_norm(f - A * x_f); // calculate f error 
-    double x_error = mean_square_norm(x - x_f); // calculate x error
+    double f_error = norm(f - A * x_f); // calculate f error 
+    double x_error = norm(x - x_f); // calculate x error
     std::cout << "Gram-Shmidt: \n";
     std::cout << "||x - x_f|| = " <<  x_error << std::endl;
     std::cout << "||f - Ax_f|| = " << f_error << std::endl;
-    std::cout << "||x - x_f|| / ||x|| = " << x_error / mean_square_norm(x) << std::endl;
+    std::cout << "||x - x_f|| / ||x|| = " << x_error / norm(x) << std::endl;
 
     Matrix_circles circles(A);
     std::cout << "\nSpectrum range:\n";
@@ -53,7 +53,7 @@ main(int argc, char** argv)
     std::vector<double> y0(SIZE, 0), y(SIZE, 0);
     size_t count = 1;
     std::vector<size_t> mask = {1};
-    while (mean_square_norm(x - y) >= x_error) {
+    while (norm(x - y) >= x_error) {
         count *= 2;
         std::vector<size_t> new_mask(count);
         for (size_t k = 0; k < count; k++) {
@@ -66,12 +66,12 @@ main(int argc, char** argv)
         mask = new_mask;
         y = Chebyshev_solve(A, f, y0, a, b, count, mask);
     }
-    f_error = mean_square_norm(f - A * y); // calculate f error 
-    x_error = mean_square_norm(x - y); // calculate x error
+    f_error = norm(f - A * y); // calculate f error 
+    x_error = norm(x - y); // calculate x error
     std::cout << "Chebyshev: \n";
     std::cout << "||x - y|| = " <<  x_error << std::endl;
     std::cout << "||f - Ay|| = " << f_error << std::endl;
-    std::cout << "||x - y|| / ||x|| = " << x_error / mean_square_norm(x) << std::endl;
+    std::cout << "||x - y|| / ||x|| = " << x_error / norm(x) << std::endl;
     std::cout << "Iterations count = " << count << std::endl;
 
     std::vector<double> errors = Chebyshev_anylyze(A, f, y0, a, b, count, mask, x); // iteration errors
